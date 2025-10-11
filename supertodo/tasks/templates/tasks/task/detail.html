@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% include 'header.html' with subtitle=''%}
+  <h3>{{ task }}</h3>
+  <p>{{ task.completed|yesno:'Completada, Pendiente' }}</p>
+  <p>{{ task.description }}</p>
+  <a href="{% url 'tasks:task-list' %}">Volver</a>
+{% endblock %}

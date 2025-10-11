@@ -2,13 +2,32 @@
 
 {% block content%}
   {% include 'header.html'%}
-  {% for task in tasks %}
-    <li>
-      {{ task }}
-      <span>{{ task.completed|yesno:'✅,❌' }}</span>
-    </li>
+  <ul>
+    {% for task in tasks %}
+      <li>
+        <article>
+          <p>
+            {{ task }}
+            <span>{{ task.completed|yesno:'✅,❌' }}</span>
+          <p>
+          <a href="{% url 'tasks:task-detail' task.slug %}">Detalle</a>
+          <a href="{% url 'tasks:toggle-task' task.slug %}">Cambiar Estado</a>
+          <a href="{% url 'tasks:edit-task' task.slug %}">Editar tarea</a>
+          <a href="{% url 'tasks:delete-task' task.slug %}">Borrar tarea</a>
+        </article>
+      </li>
     {% empty %}
-    <p>Nada que hacer. ¡Enhorabuena!</p>
-    
-  {% endfor %}
+      <p>Nada que hacer. ¡Enhorabuena!</p>
+    {% endfor %}
+  </ul>
+  <footer>
+    <nav>
+      <ul>
+        <li><a href="{% url 'tasks:task-list' %}">Todas las tareas</a></li>
+        <li><a href="{% url 'tasks:task-list-completed' %}">Tareas completadas</a></li>
+        <li><a href="{% url 'tasks:task-list-pending' %}">Tareas pendientes</a></li>
+        <li><a href="{% url 'tasks:add-task' %}">Añadir tarea</a></li>
+      </ul>
+    </nav>
+  </footer>
 {% endblock %}
