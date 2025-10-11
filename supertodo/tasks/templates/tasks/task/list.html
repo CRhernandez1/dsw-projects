@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content%}
+  {% include 'header.html'%}
+  {% for task in tasks %}
+    <li>
+      {{ task }}
+      <span>{{ task.completed|yesno:'✅,❌' }}</span>
+    </li>
+    {% empty %}
+    <p>Nada que hacer. ¡Enhorabuena!</p>
+    
+  {% endfor %}
+{% endblock %}
