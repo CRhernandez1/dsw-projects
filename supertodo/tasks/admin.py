@@ -4,5 +4,5 @@ from .models import Task
 
 
 @admin.register(Task)
-class PostAdmin(admin.ModelAdmin):
+class TaskAdmin(admin.ModelAdmin):
     pass

@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  {% include 'header.html' with subtitle=task.slug|yesno:'Editar tarea, Añadir tarea' %}
-  <form method="post" novalidate>
-    {% csrf_token %}
-    {{ form }}
-    <a href="{% url 'tasks:task-list' %}">Cancelar</a>
-    <input type="submit" value="Enviar">
-  </form>
+<form method="post" novalidate>
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Añadir">
+  <a href="{% url 'tasks:task-list' %}">Cancelar</a>
+</form>
 {% endblock %}

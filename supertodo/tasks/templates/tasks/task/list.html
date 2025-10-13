@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
-
-{% block content%}
-  {% include 'header.html'%}
+{% block content %}
   <ul>
     {% for task in tasks %}
-      <li>
-        <article>
-          <p>
-            {{ task }}
-            <span>{{ task.completed|yesno:'✅,❌' }}</span>
-          <p>
-          <a href="{% url 'tasks:task-detail' task.slug %}">Detalle</a>
-          <a href="{% url 'tasks:toggle-task' task.slug %}">Cambiar Estado</a>
-          <a href="{% url 'tasks:edit-task' task.slug %}">Editar tarea</a>
-          <a href="{% url 'tasks:delete-task' task.slug %}">Borrar tarea</a>
-        </article>
-      </li>
+    <li>
+      <article>
+        {{ task }}
+        {{ task.completed|yesno:'✅,❌' }}
+        <nav>
+          <ul>
+            <li><a href="{% url 'tasks:task-detail' task.slug %}">Detalle</a></li>
+            <li><a href="{% url 'tasks:toggle-task' task.slug %}">Cambiar Estado</a></li>
+            <li><a href="{% url 'tasks:edit-task' task.slug %}">Editar tarea</a></li>
+            <li><a href="{% url 'tasks:delete-task' task.slug %}">Borrar tarea</a></li>
+          </ul>
+        </nav>
+      </article>
+    </li>
     {% empty %}
-      <p>Nada que hacer. ¡Enhorabuena!</p>
+    <p>Nada que hacer. ¡Enhorabuena!</p>
     {% endfor %}
   </ul>
   <footer>
