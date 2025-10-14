@@ -5,6 +5,16 @@ from django.utils.text import slugify
 from .forms import AddTaskForm
 from .models import Task
 
+# def check_exist_slug(view):
+#     def wrapper(request, task_slug, *args, **kwargs):
+#         try:
+#             Task.objects.get(slug=task_slug)
+#         except Task.DoesNotExist as err:
+#             return HttpResponse(f'{err.__str__}: La tarea con el slug {task_slug} no existe.')
+#         return view(request, task_slug, *args, **kwargs)
+
+#     return wrapper
+
 
 def task_list(request):
     tasks = Task.objects.all()
@@ -31,7 +41,7 @@ def add_task(request):
         task.slug = slugify(task.name)
         task.save()
         return redirect('tasks:task-list')
-    return render(request, 'tasks/task/add.html', {'form': form, 'subtitle': 'Añadir tarea'})
+    return render(request, 'tasks/task/form.html', {'form': form, 'subtitle': 'Añadir tarea'})
 
 
 def task_detail(request, task_slug):
@@ -61,7 +71,7 @@ def edit_task(request, task_slug):
         task.slug = slugify(task.name)
         task.save()
         return redirect('tasks:task-detail', task_slug=task.slug)
-    return render(request, 'tasks/task/add.html', {'form': form, 'subtitle': 'Editar tarea'})
+    return render(request, 'tasks/task/form.html', {'form': form, 'subtitle': 'Editar tarea'})
 
 
 def toggle_task(request, task_slug):
