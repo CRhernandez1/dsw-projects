@@ -1,19 +1,9 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
 
+from .decorators import check_exist_slug
 from .forms import AddTaskForm
 from .models import Task
-
-# def check_exist_slug(view):
-#     def wrapper(request, task_slug, *args, **kwargs):
-#         try:
-#             Task.objects.get(slug=task_slug)
-#         except Task.DoesNotExist as err:
-#             return HttpResponse(f'{err.__str__}: La tarea con el slug {task_slug} no existe.')
-#         return view(request, task_slug, *args, **kwargs)
-
-#     return wrapper
 
 
 def task_list(request):
@@ -44,29 +34,20 @@ def add_task(request):
     return render(request, 'tasks/task/form.html', {'form': form, 'subtitle': 'Añadir tarea'})
 
 
+@check_exist_slug
 def task_detail(request, task_slug):
-    try:
-        task = Task.objects.get(slug=task_slug)
-    except Task.DoesNotExist:
-        return HttpResponse(f'La tarea con el slug {task_slug} no existe')
-    return render(request, 'tasks/task/detail.html', {'task': task})
+    return render(request, 'tasks/task/detail.html', {'task': request.task})
 
 
+@check_exist_slug
 def delete_task(request, task_slug):
-    try:
-        task = Task.objects.get(slug=task_slug)
-    except Task.DoesNotExist:
-        return HttpResponse(f'La tarea con el slug {task_slug} no existe')
-    task.delete()
+    request.task.delete()
     return redirect('tasks:task-list')
 
 
+@check_exist_slug
 def edit_task(request, task_slug):
-    try:
-        task = Task.objects.get(slug=task_slug)
-    except Task.DoesNotExist:
-        return HttpResponse(f'La tarea con el slug {task_slug} no existe')
-    if (form := AddTaskForm(request.POST or None, instance=task)).is_valid():
+    if (form := AddTaskForm(request.POST or None, instance=request.task)).is_valid():
         task = form.save(commit=False)
         task.slug = slugify(task.name)
         task.save()
@@ -74,11 +55,8 @@ def edit_task(request, task_slug):
     return render(request, 'tasks/task/form.html', {'form': form, 'subtitle': 'Editar tarea'})
 
 
+@check_exist_slug
 def toggle_task(request, task_slug):
-    try:
-        task = Task.objects.get(slug=task_slug)
-    except Task.DoesNotExist:
-        return HttpResponse(f'La tarea con el slug {task_slug} no existe')
-    task.completed = not task.completed
-    task.save()
+    request.task.completed = not request.task.completed
+    request.task.save()
     return redirect('tasks:task-list')
