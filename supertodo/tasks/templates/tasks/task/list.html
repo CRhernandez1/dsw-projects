@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
+<nav class="menu">
+      <ul>
+        <li><a href="{% url 'tasks:task-list' %}">Todas las tareas</a></li>
+        <li><a href="{% url 'tasks:task-list-completed' %}">Tareas completadas</a></li>
+        <li><a href="{% url 'tasks:task-list-pending' %}">Tareas pendientes</a></li>
+        <li><a href="{% url 'tasks:add-task' %}">Añadir tarea</a></li>
+      </ul>
+  </nav>
   <ul>
     {% for task in tasks %}
     <li>
       <article>
-        {{ task }}
-        {{ task.completed|yesno:'✅,❌' }}
+        
+          <h3>{{ task }} <span>{{ task.completed|yesno:'✅,❌' }}</span></h3>
+        
         <nav>
-          <ul>
-            <li><a href="{% url 'tasks:task-detail' task.slug %}">Detalle</a></li>
-            <li><a href="{% url 'tasks:toggle-task' task.slug %}">Cambiar Estado</a></li>
-            <li><a href="{% url 'tasks:edit-task' task.slug %}">Editar tarea</a></li>
-            <li><a href="{% url 'tasks:delete-task' task.slug %}">Borrar tarea</a></li>
+          <ul class="tasks-options">
+            <li class="option option-detail"><a title='Detalles' href="{% url 'tasks:task-detail' task.slug %}"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" class="icon flat-line" data-name="Flat Line" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9 9 9 0 0 1-9 9 9 9 0 0 1-9-9Z" style="fill:#2ca9bc;stroke-width:2"/><path d="M12.05 8h-.1" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.5"/><path d="M12 13v3m-9-4a9 9 0 0 0 9 9h0a9 9 0 0 0 9-9h0a9 9 0 0 0-9-9h0a9 9 0 0 0-9 9Z" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2"/></svg></a></li>
+            <li class="option option-status"><a title='Estado' href="{% url 'tasks:toggle-task' task.slug %}"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 1024 1024"><path d="M512 1024C229.23 1024 0 794.77 0 512S229.23 0 512 0s512 229.23 512 512-229.23 512-512 512zm95.731-219.947c62.403-20.276 114.032-58.693 150.859-107.357a15.793 15.793 0 0 0 4.801-13.823 15.302 15.302 0 0 0-.062-.473l-.008-.039a15.75 15.75 0 0 0-8.378-11.488l-44.709-32.893a15.837 15.837 0 0 0-13.75-4.587c-.124.014-.249.029-.373.046l-.058.014a15.88 15.88 0 0 0-11.478 8.236c-25.776 33.881-61.624 60.563-105.31 74.758-113.432 36.856-234.791-24.722-271.525-137.777s25.253-234.206 138.685-271.062c106.335-34.55 218.904 15.82 262.966 115.175l-71.623-.803c-7.187-1.066-14.189 2.885-16.982 9.581a15.743 15.743 0 0 0 4.748 18.601l120.91 126.41c2.999 3.135 7.161 4.899 11.51 4.879s8.502-1.823 11.485-4.986L890.37 448.206c5.265-4.193 7.303-11.242 5.082-17.573a20.516 20.516 0 0 0-.119-.318 15.889 15.889 0 0 0-.947-2.099l-.031-.073c-3.116-5.729-9.448-8.951-15.937-8.108l-71.678-.494-.892-2.744C753.5 255.685 579.61 167.45 417.952 219.976S167.478 446.095 219.826 607.207c52.348 161.112 226.238 249.347 387.896 196.821l.008.027z"/></svg></a></li>
+            <li class="option option-edit"><a title='Editar' href="{% url 'tasks:edit-task' task.slug %}"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="none" viewBox="0 0 20 20"><path fill="#000" fill-rule="evenodd" d="M15.747 2.97a.864.864 0 0 1 1.177 1.265l-7.904 7.37-1.516.194.653-1.785 7.59-7.044zm2.639-1.366a2.864 2.864 0 0 0-4-.1L6.62 8.71a1 1 0 0 0-.26.39l-1.3 3.556a1 1 0 0 0 1.067 1.335l3.467-.445a1 1 0 0 0 .555-.26l8.139-7.59a2.864 2.864 0 0 0 .098-4.093zM3.1 3.007c0-.001 0-.003.002-.005A.013.013 0 0 1 3.106 3H8a1 1 0 1 0 0-2H3.108a2.009 2.009 0 0 0-2 2.19C1.256 4.814 1.5 7.848 1.5 10c0 2.153-.245 5.187-.391 6.81A2.009 2.009 0 0 0 3.108 19H17c1.103 0 2-.892 2-1.999V12a1 1 0 1 0-2 0v5H3.106l-.003-.002a.012.012 0 0 1-.002-.005v-.004c.146-1.62.399-4.735.399-6.989 0-2.254-.253-5.37-.4-6.99v-.003zM17 17c-.001 0 0 0 0 0zm0 0z"/></svg></a></li>
+            <li class="option option-delete"><a title='Borrar' href="{% url 'tasks:delete-task' task.slug %}"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="none" viewBox="0 0 24 24"><path stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M6 10l1.701 9.358A2 2 0 0 0 9.67 21h4.662a2 2 0 0 0 1.968-1.642L18 10M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2H9V5Z"/></svg></a></li>
           </ul>
         </nav>
       </article>
@@ -20,14 +29,5 @@
     <p>Nada que hacer. ¡Enhorabuena!</p>
     {% endfor %}
   </ul>
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="{% url 'tasks:task-list' %}">Todas las tareas</a></li>
-        <li><a href="{% url 'tasks:task-list-completed' %}">Tareas completadas</a></li>
-        <li><a href="{% url 'tasks:task-list-pending' %}">Tareas pendientes</a></li>
-        <li><a href="{% url 'tasks:add-task' %}">Añadir tarea</a></li>
-      </ul>
-    </nav>
-  </footer>
+  
 {% endblock %}
