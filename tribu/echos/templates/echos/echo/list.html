@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Echos {% endblock%}
+
+{% block content %} 
+  <p>Tribu has posted {{ n_echos }} echo{{ n_echos|pluralize }} so far!</p>
+  <ul>
+    {% for echo in echos %}
+    <li>
+      <article>
+        <p>{{ echo.content|truncatewords:20 }}</p>
+        <p>{{ echo.user }}</p>
+        <p>{{ echo.created_at|timesince }}</p>
+      </article>
+    </li>
+      {% empty %}
+        <p>No echos yet</p>
+    {% endfor %}
+  </ul>
+{% endblock %}
