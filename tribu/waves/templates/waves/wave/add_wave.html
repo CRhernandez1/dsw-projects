@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Add Echo {% endblock%}
+{% block title %} Add Wave {% endblock%}
 
 {% block content %} 
 
@@ -8,7 +8,7 @@
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Añadir">
-    <a href="{{cancel_url}}">Cancelar</a>
+    <a href="{{ cancel_url }}">Cancelar</a>
 </form>
 
 {% endblock %}

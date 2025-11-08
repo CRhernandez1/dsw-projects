@@ -1,18 +1,71 @@
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
 from .forms import AddEchoForm
 from .models import Echo
 
 
+@login_required
 def echo_list(request):
     echos = Echo.objects.all()
     return render(request, 'echos/echo/list.html', {'echos': echos, 'n_echos': echos.count()})
 
 
+@login_required
 def add_echo(request):
     if (form := AddEchoForm(request.POST or None)).is_valid():
         echo = form.save(commit=False)
         echo.user = request.user
         echo.save()
         return redirect('echos:echo-list')
-    return render(request, 'echos/echo/add_echo.html', dict(form=form))
+    return render(
+        request, 'echos/echo/add_echo.html', dict(form=form, cancel_url=reverse('echos:echo-list'))
+    )
+
+
+@login_required
+def echo_detail(request, echo_id):
+    echo = get_object_or_404(Echo, id=echo_id)
+    waves = echo.waves.all()
+    show_more = waves.count() > 5
+    waves = waves[:5]
+    return render(
+        request, 'echos/echo/detail.html', {'echo': echo, 'waves': waves, 'show_more': show_more}
+    )
+
+
+@login_required
+def echo_waves(request, echo_id):
+    echo = get_object_or_404(Echo, id=echo_id)
+    waves = echo.waves.all()
+    return render(request, 'echos/echo/detail.html', {'echo': echo, 'waves': waves})
+
+
+@login_required
+def edit_echo(request, echo_id):
+    echo = get_object_or_404(Echo, id=echo_id)
+
+    if echo.user != request.user:
+        return HttpResponseForbidden()
+
+    if (form := AddEchoForm(request.POST or None, instance=echo)).is_valid():
+        echo = form.save()
+        return redirect('echos:echo-detail', echo_id=echo.id)
+    return render(
+        request,
+        'echos/echo/add_echo.html',
+        dict(form=form, cancel_url=reverse('echos:echo-detail', args=[echo.id])),
+    )
+
+
+@login_required
+def delete_echo(request, echo_id):
+    echo = get_object_or_404(Echo, id=echo_id)
+
+    if echo.user != request.user:
+        return HttpResponseForbidden()
+
+    echo.delete()
+    return redirect('echos:echo-list')

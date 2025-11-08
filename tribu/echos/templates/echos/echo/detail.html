@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} Detail Echo {% endblock%}
+
+{% block content %} 
+  <article>
+    <p>{{ echo.content }}</p>
+    <p>{{ echo.user }}</p>
+    <p>{{ echo.created_at|timesince }}</p>
+    <ol>
+      {% for wave in waves %}
+      <li>
+        <article>
+          <p>{{ wave.content }}</p>
+          <p>{{ wave.user }}</p>
+          <p>{{ wave.created_at|timesince }}</p>
+        </article>
+      </li>
+        {% empty %}
+          <p>No waves yet</p>
+      {% endfor %}
+    </ol>
+    {% if show_more %}
+      <a href="{% url 'echos:echo-waves' echo.id %}">View all waves</a>
+    {% endif %}
+  </article>
+{% endblock %}
