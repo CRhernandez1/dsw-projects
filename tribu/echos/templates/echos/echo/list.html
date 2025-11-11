@@ -2,9 +2,10 @@
 
 {% block title %} Echos {% endblock%}
 
-{% block content %} 
+{% block content %}
+
   <p>Tribu has posted {{ n_echos }} echo{{ n_echos|pluralize }} so far!</p>
-  <a href="{% url 'echos:add-echo' %}">Add Echo</a>
+  <a href="{% url 'echos:add-echo' %}">Add echo</a>
   <ol>
     {% for echo in echos %}
     <li>

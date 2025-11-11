@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
@@ -18,6 +19,7 @@ def add_wave(request, echo_id):
         wave.user = request.user
         wave.echo = echo
         wave.save()
+        messages.success(request, 'Wave added successfully')
         return redirect('echos:echo-detail', echo_id=echo.id)
     return render(
         request,
@@ -36,6 +38,7 @@ def edit_wave(request, wave_id):
     if (form := AddWaveForm(request.POST or None, instance=wave)).is_valid():
         wave = form.save(commit=False)
         wave.save()
+        messages.success(request, 'Wave updated successfully')
         return redirect('echos:echo-detail', echo_id=wave.echo.id)
     return render(
         request,
@@ -52,4 +55,5 @@ def delete_wave(request, wave_id):
         return HttpResponseForbidden()
     echo_id = wave.echo.id
     wave.delete()
+    messages.success(request, 'Wave deleted successfully')
     return redirect('echos:echo-detail', echo_id=echo_id)

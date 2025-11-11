@@ -7,6 +7,10 @@
     <p>{{ echo.content }}</p>
     <p>{{ echo.user }} <a href="{% url 'users:user-detail' echo.user.username %}">Profile</a></p>
     <p>{{ echo.created_at|timesince }}</p>
+    {% if echo.user == request.user %}
+      <a href="{% url 'echos:delete-echo' echo.id%}">Delete echo</a>
+      <a href="{% url 'echos:edit-echo' echo.id%}">Edit echo</a>
+    {% endif %}
     <ol>
       {% for wave in waves %}
       <li>
@@ -14,6 +18,10 @@
           <p>{{ wave.content }}</p>
           <p>{{ wave.user }}</p>
           <p>{{ wave.created_at|timesince }}</p>
+          {% if wave.user == request.user %}
+            <a href="{% url 'waves:delete-wave' wave.id %}">Delete wave</a>
+            <a href="{% url 'waves:edit-wave' wave.id %}">Edit wave</a>     
+          {% endif %}
         </article>
       </li>
         {% empty %}

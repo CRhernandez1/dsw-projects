@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
@@ -19,6 +20,7 @@ def add_echo(request):
         echo = form.save(commit=False)
         echo.user = request.user
         echo.save()
+        messages.success(request, 'Echo added successfully')
         return redirect('echos:echo-list')
     return render(
         request, 'echos/echo/add_echo.html', dict(form=form, cancel_url=reverse('echos:echo-list'))
@@ -52,7 +54,9 @@ def edit_echo(request, echo_id):
 
     if (form := AddEchoForm(request.POST or None, instance=echo)).is_valid():
         echo = form.save()
+        messages.success(request, 'Echo updated successfully')
         return redirect('echos:echo-detail', echo_id=echo.id)
+
     return render(
         request,
         'echos/echo/add_echo.html',
@@ -68,4 +72,5 @@ def delete_echo(request, echo_id):
         return HttpResponseForbidden()
 
     echo.delete()
+    messages.success(request, 'Echo deleted successfully')
     return redirect('echos:echo-list')

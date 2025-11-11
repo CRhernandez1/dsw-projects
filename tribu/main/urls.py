@@ -27,5 +27,6 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', shared.views.index, name='index'),
     path('echos/', include('echos.urls')),
+    path('waves/', include('waves.urls')),
     path('users/', include('users.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
