@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title%} Users {% endblock %}
+
+{% block content %}
+  <article>
+    <ul>
+      <li>{{ profile.user.first_name }}</li>
+      <li>{{ profile.user.last_name }}</li>
+      <li>{{ profile.user.username }}</li>
+      <li>{{ profile.user.email }}</li>
+      <li>{{ profile.bio }}</li>
+    </ul>
+    {% if show_more %}
+      <a href="{% url 'users:user-echos' profile.user.username %}">View All Echos</a>
+    {% endif %}
+    <ol>
+      {% for echo in echos %}
+      <li>
+        <article>
+          <p>{{ echo.content|truncatewords:20 }}</p>
+          <p>{{ echo.user.username }} <a href="{% url 'users:user-detail' echo.user.username %}">Profile</a></p>
+          <a href="{% url 'echos:echo-detail' echo.id %}">Detail Echo</a>
+          <p>{{ echo.created_at|timesince }}</p>
+        </article>
+      </li>
+        {% empty %}
+          <p>No echos yet</p>
+      {% endfor %}
+    </ol>
+    <img src="{{ profile.avatar.url }}" alt="Profile Image">
+  </article>
+{% endblock %}

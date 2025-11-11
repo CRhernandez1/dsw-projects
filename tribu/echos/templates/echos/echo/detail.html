@@ -5,7 +5,7 @@
 {% block content %} 
   <article>
     <p>{{ echo.content }}</p>
-    <p>{{ echo.user }}</p>
+    <p>{{ echo.user }} <a href="{% url 'users:user-detail' echo.user.username %}">Profile</a></p>
     <p>{{ echo.created_at|timesince }}</p>
     <ol>
       {% for wave in waves %}

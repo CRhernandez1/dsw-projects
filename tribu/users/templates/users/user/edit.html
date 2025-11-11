@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Profile {% endblock%}
+
+{% block content %} 
+
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Añadir">
+    <a href="{% url 'users:user-detail' user.username %}">Cancelar</a>
+</form>
+
+{% endblock %}
