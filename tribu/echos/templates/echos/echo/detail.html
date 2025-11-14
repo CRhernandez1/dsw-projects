@@ -17,7 +17,7 @@
       <li>
         <article>
           <p>{{ wave.content }}</p>
-          <p>{{ wave.user }}</p>
+          <p>{{ wave.user }} <a href="{% url 'users:user-detail' wave.user.username %}">Profile</a></p>
           <p>{{ wave.created_at|timesince }}</p>
           {% if wave.user == request.user %}
             <a href="{% url 'waves:delete-wave' wave.id %}">Delete wave</a>

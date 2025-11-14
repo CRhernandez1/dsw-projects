@@ -34,7 +34,7 @@ def user_echos(request, username: str):
     return render(
         request,
         'users/user/detail.html',
-        {'echos': echos},
+        {'echos': echos, 'user': user},
     )
 
 
@@ -50,9 +50,10 @@ def edit_profile(request, username):
     if user != request.user:
         return HttpResponseForbidden()
 
-    if (form := EditProfileForm(request.POST or None, instance=user)).is_valid():
+    if (
+        form := EditProfileForm(request.POST or None, request.FILES or None, instance=user.profile)
+    ).is_valid():
         user = form.save()
-        Profile.objects.update(user=user)
         messages.success(request, 'Profile updated successfully')
         return redirect('users:my-user-detail')
     return render(request, 'users/user/edit.html', {'form': form})

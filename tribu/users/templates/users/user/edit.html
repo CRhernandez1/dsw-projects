@@ -4,7 +4,7 @@
 
 {% block content %} 
 
-<form method="post" novalidate>
+<form method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Añadir">

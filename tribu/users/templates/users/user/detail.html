@@ -28,7 +28,7 @@
           <p>No echos yet</p>
       {% endfor %}
     </ol>
-    <img src="{{ user.avatar.url }}" alt="Profile Image">
+    <img src="{{ user.profile.avatar.url }}" alt="Profile Image">
     {% if user == request.user %}
       <a href="{% url 'users:edit-profile' user.username %}">Edit profile</a>
     {% endif %}
