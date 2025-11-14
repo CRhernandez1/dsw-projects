@@ -6,8 +6,8 @@
   <ul>
     {% for profile in profiles %}
     <li>
-      <p>{{ profile.user }}</p>
-      <a href="#">Perfil del usuario</a>
+      <p>{{ profile.user.username }}</p>
+      <a href="{% url 'users:user-detail' profile.user.username %}">Profile</a>
     </li>
     {% endfor %}
   </ul>

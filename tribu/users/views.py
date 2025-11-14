@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseForbidden
@@ -54,5 +55,6 @@ def edit_profile(request, username):
 
     if (form := EditProfileForm(request.POST or None, instance=profile)).is_valid():
         profile = form.save()
+        messages.success(request, 'Profile updated successfully')
         return redirect('users:my-user-detail')
     return render(request, 'users/user/edit.html', {'form': form})

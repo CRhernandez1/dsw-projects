@@ -7,6 +7,7 @@
     <p>{{ echo.content }}</p>
     <p>{{ echo.user }} <a href="{% url 'users:user-detail' echo.user.username %}">Profile</a></p>
     <p>{{ echo.created_at|timesince }}</p>
+    <a href="{% url 'echos:add-wave' echo.id%}">Add wave</a>
     {% if echo.user == request.user %}
       <a href="{% url 'echos:delete-echo' echo.id%}">Delete echo</a>
       <a href="{% url 'echos:edit-echo' echo.id%}">Edit echo</a>

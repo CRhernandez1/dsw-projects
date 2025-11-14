@@ -3,8 +3,9 @@
 {% block title %} Echos {% endblock%}
 
 {% block content %}
-
-  <p>Tribu has posted {{ n_echos }} echo{{ n_echos|pluralize }} so far!</p>
+  {% if n_echos%}
+    <p>Tribu has posted {{ n_echos }} echo{{ n_echos|pluralize }} so far!</p>
+  {% endif %}
   <a href="{% url 'echos:add-echo' %}">Add echo</a>
   <ol>
     {% for echo in echos %}

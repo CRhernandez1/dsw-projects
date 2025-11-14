@@ -29,5 +29,8 @@
       {% endfor %}
     </ol>
     <img src="{{ profile.avatar.url }}" alt="Profile Image">
+    {% if profile.user == request.user %}
+      <a href="{% url 'users:edit-profile' profile.user.username %}">Edit profile</a>
+    {% endif %}
   </article>
 {% endblock %}

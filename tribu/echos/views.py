@@ -21,7 +21,7 @@ def add_echo(request):
         echo.user = request.user
         echo.save()
         messages.success(request, 'Echo added successfully')
-        return redirect('echos:echo-list')
+        return redirect(echo)
     return render(
         request, 'echos/echo/add_echo.html', dict(form=form, cancel_url=reverse('echos:echo-list'))
     )
