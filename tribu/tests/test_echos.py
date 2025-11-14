@@ -22,6 +22,9 @@ def test_echo_list_page_requires_authentication(client, user):
 @pytest.mark.django_db
 def test_echo_list_page_contains_expected_echo_information(client, user):
     echos = baker.make_recipe('tests.echo', _quantity=10)
+    # Hack to fix {{ echo.user.profile.get_absolute_url }} in the template
+    for echo in echos:
+        baker.make_recipe('tests.profile', user=echo.user)
 
     client.force_login(user)
     response = client.get(conftest.ECHO_LIST_URL)
@@ -29,7 +32,7 @@ def test_echo_list_page_contains_expected_echo_information(client, user):
     for echo in echos:
         assertContains(response, truncatewords(echo.content, 20))
         assertContains(response, echo.user.username)
-        assertContains(response, f'/users/{echo.user.username}/')
+        assertContains(response, conftest.USER_DETAIL_URL.format(username=echo.user.username))
         assertContains(response, conftest.ECHO_DETAIL_URL.format(echo_pk=echo.pk))
         assertContains(response, timesince(echo.created_at))
 

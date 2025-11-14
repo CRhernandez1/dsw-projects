@@ -2,7 +2,9 @@
 
 {% block title %} Registro {% endblock %}
 
-
+{% block link_plus %}
+  <a href="{% url 'login' %}">Login</a>
+{% endblock %}
 {% block cancel_button %}
   <a href="{% url 'index' %}">Cancelar</a>
 {% endblock %}

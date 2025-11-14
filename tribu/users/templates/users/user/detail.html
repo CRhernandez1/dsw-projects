@@ -5,14 +5,14 @@
 {% block content %}
   <article>
     <ul>
-      <li>{{ profile.user.first_name }}</li>
-      <li>{{ profile.user.last_name }}</li>
-      <li>{{ profile.user.username }}</li>
-      <li>{{ profile.user.email }}</li>
-      <li>{{ profile.bio }}</li>
+      <li>{{ user.first_name }}</li>
+      <li>{{ user.last_name }}</li>
+      <li>{{ user.username }}</li>
+      <li>{{ user.email }}</li>
+      <li>{{ user.profile.bio }}</li>
     </ul>
     {% if show_more %}
-      <a href="{% url 'users:user-echos' profile.user.username %}">View All Echos</a>
+      <a href="{% url 'users:user-echos' user.username %}">View All Echos</a>
     {% endif %}
     <ol>
       {% for echo in echos %}
@@ -28,9 +28,9 @@
           <p>No echos yet</p>
       {% endfor %}
     </ol>
-    <img src="{{ profile.avatar.url }}" alt="Profile Image">
-    {% if profile.user == request.user %}
-      <a href="{% url 'users:edit-profile' profile.user.username %}">Edit profile</a>
+    <img src="{{ user.avatar.url }}" alt="Profile Image">
+    {% if user == request.user %}
+      <a href="{% url 'users:edit-profile' user.username %}">Edit profile</a>
     {% endif %}
   </article>
 {% endblock %}

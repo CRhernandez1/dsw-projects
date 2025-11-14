@@ -1,7 +1,7 @@
 from functools import partial
 
 from faker import Faker
-from model_bakery.recipe import Recipe
+from model_bakery.recipe import Recipe, foreign_key
 
 fake = Faker()
 
@@ -28,6 +28,7 @@ wave = Recipe(
 
 profile = Recipe(
     'users.Profile',
+    user=foreign_key(user),
     bio=partial(fake.text, max_nb_chars=200),
     avatar='path/to/default/avatar.jpg',
     _fill_optional=True,

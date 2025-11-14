@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
-from users.models import Profile
-
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -15,10 +13,3 @@ class SignupForm(forms.ModelForm):
         fields = ('username', 'password', 'first_name', 'last_name', 'email')
         widgets = {'password': forms.PasswordInput}
         help_texts = {'username': None}
-
-    def save(self, *args, **kwargs):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])
-        user.save()
-        Profile.objects.create(user=user)
-        return user
