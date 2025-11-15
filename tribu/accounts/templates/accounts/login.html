@@ -2,10 +2,8 @@
 
 {% block title %} Login {% endblock %}
 
-{% block link_plus %}
+{% block custom_links %}
+  <a href="{% url 'index' %}">Cancelar</a>
   <a href="{% url 'signup' %}">Sign up</a>
 {% endblock %}
 
-{% block cancel_button %}
-  <a href="{% url 'index' %}">Cancelar</a>
-{% endblock %}

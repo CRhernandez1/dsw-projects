@@ -7,20 +7,20 @@
     <ul>
       <li>{{ user.first_name }}</li>
       <li>{{ user.last_name }}</li>
-      <li>{{ user.username }}</li>
+      <li>{{ user }}</li>
       <li>{{ user.email }}</li>
       <li>{{ user.profile.bio }}</li>
     </ul>
     {% if show_more %}
-      <a href="{% url 'users:user-echos' user.username %}">View All Echos</a>
+      <a href="{% url 'users:user-echos' user %}">View All Echos</a>
     {% endif %}
     <ol>
       {% for echo in echos %}
       <li>
         <article>
           <p>{{ echo.content|truncatewords:20 }}</p>
-          <p>{{ echo.user.username }} <a href="{% url 'users:user-detail' echo.user.username %}">Profile</a></p>
-          <a href="{% url 'echos:echo-detail' echo.id %}">Detail Echo</a>
+          <p>{{ echo.user }} <a href="{{ echo.user.get_absolute_url }}">Profile</a></p>
+          <a href="{% url 'echos:echo-detail' echo %}">Detail Echo</a>
           <p>{{ echo.created_at|timesince }}</p>
         </article>
       </li>
@@ -30,7 +30,7 @@
     </ol>
     <img src="{{ user.profile.avatar.url }}" alt="Profile Image">
     {% if user == request.user %}
-      <a href="{% url 'users:edit-profile' user.username %}">Edit profile</a>
+      <a href="{% url 'users:edit-profile' user %}">Edit profile</a>
     {% endif %}
   </article>
 {% endblock %}

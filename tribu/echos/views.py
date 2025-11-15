@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from .forms import AddEchoForm
@@ -23,13 +23,14 @@ def add_echo(request):
         messages.success(request, 'Echo added successfully')
         return redirect(echo)
     return render(
-        request, 'echos/echo/add_echo.html', dict(form=form, cancel_url=reverse('echos:echo-list'))
+        request,
+        'echos/echo/form_echos.html',
+        {'form': form, 'cancel_url': reverse('echos:echo-list'), 'submit_text': 'Añadir'},
     )
 
 
 @login_required
-def echo_detail(request, echo_id):
-    echo = get_object_or_404(Echo, id=echo_id)
+def echo_detail(request, echo):
     waves = echo.waves.all()
     show_more = waves.count() > 5
     waves = waves[:5]
@@ -39,35 +40,34 @@ def echo_detail(request, echo_id):
 
 
 @login_required
-def echo_waves(request, echo_id):
-    echo = get_object_or_404(Echo, id=echo_id)
+def echo_waves(request, echo):
     waves = echo.waves.all()
     return render(request, 'echos/echo/detail.html', {'echo': echo, 'waves': waves})
 
 
 @login_required
-def edit_echo(request, echo_id):
-    echo = get_object_or_404(Echo, id=echo_id)
-
+def edit_echo(request, echo):
     if echo.user != request.user:
         return HttpResponseForbidden()
 
     if (form := AddEchoForm(request.POST or None, instance=echo)).is_valid():
         echo = form.save()
         messages.success(request, 'Echo updated successfully')
-        return redirect('echos:echo-detail', echo_id=echo.id)
+        return redirect('echos:echo-detail', echo)
 
     return render(
         request,
-        'echos/echo/add_echo.html',
-        dict(form=form, cancel_url=reverse('echos:echo-detail', args=[echo.id])),
+        'echos/echo/form_echos.html',
+        {
+            'form': form,
+            'cancel_url': echo.get_absolute_url(),
+            'submit_text': 'Editar',
+        },
     )
 
 
 @login_required
-def delete_echo(request, echo_id):
-    echo = get_object_or_404(Echo, id=echo_id)
-
+def delete_echo(request, echo):
     if echo.user != request.user:
         return HttpResponseForbidden()
 

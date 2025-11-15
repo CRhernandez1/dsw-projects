@@ -12,8 +12,8 @@
     <li>
       <article>
         <p>{{ echo.content|truncatewords:20 }}</p>
-        <p>{{ echo.user }} <a href="{% url 'users:user-detail' echo.user.username %}">Profile</a></p>
-        <a href="{% url 'echos:echo-detail' echo.id %}">Detail Echo</a>
+        <p>{{ echo.user }} <a href="{% url 'users:user-detail' echo.user %}">Profile</a></p>
+        <a href="{% url 'echos:echo-detail' echo %}">Detail Echo</a>
         <p>{{ echo.created_at|timesince }}</p>
       </article>
     </li>

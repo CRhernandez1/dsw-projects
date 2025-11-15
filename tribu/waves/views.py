@@ -1,37 +1,33 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse
-
-from echos.models import Echo
+from django.shortcuts import redirect, render
 
 from .forms import AddWaveForm
-from .models import Wave
 
 
 @login_required
-def add_wave(request, echo_id):
-    echo = get_object_or_404(Echo, id=echo_id)
-
+def add_wave(request, echo):
     if (form := AddWaveForm(request.POST or None)).is_valid():
         wave = form.save(commit=False)
         wave.user = request.user
         wave.echo = echo
         wave.save()
         messages.success(request, 'Wave added successfully')
-        return redirect('echos:echo-detail', echo_id=echo.id)
+        return redirect('echos:echo-detail', echo)
     return render(
         request,
-        'echos/echo/add_echo.html',
-        dict(form=form, cancel_url=reverse('echos:echo-detail', args=[echo.id])),
+        'waves/wave/form_waves.html',
+        {
+            'form': form,
+            'cancel_url': echo.get_absolute_url(),
+            'submit_text': 'Añadir',
+        },
     )
 
 
 @login_required
-def edit_wave(request, wave_id):
-    wave = get_object_or_404(Wave, id=wave_id)
-
+def edit_wave(request, wave):
     if wave.user != request.user:
         return HttpResponseForbidden()
 
@@ -39,21 +35,23 @@ def edit_wave(request, wave_id):
         wave = form.save(commit=False)
         wave.save()
         messages.success(request, 'Wave updated successfully')
-        return redirect('echos:echo-detail', echo_id=wave.echo.id)
+        return redirect('echos:echo-detail', wave.echo)
     return render(
         request,
-        'echos/echo/add_echo.html',
-        dict(form=form, cancel_url=reverse('echos:echo-detail', args=[wave.echo.id])),
+        'waves/wave/form_waves.html',
+        {
+            'form': form,
+            'cancel_url': wave.echo.get_absolute_url(),
+            'submit_text': 'Editar',
+        },
     )
 
 
 @login_required
-def delete_wave(request, wave_id):
-    wave = get_object_or_404(Wave, id=wave_id)
-
+def delete_wave(request, wave):
     if wave.user != request.user:
         return HttpResponseForbidden()
-    echo_id = wave.echo.id
+    echo_id = wave.echo
     wave.delete()
     messages.success(request, 'Wave deleted successfully')
-    return redirect('echos:echo-detail', echo_id=echo_id)
+    return redirect('echos:echo-detail', echo_id)

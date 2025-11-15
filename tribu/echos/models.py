@@ -12,7 +12,7 @@ class Echo(models.Model):
     )
 
     def get_absolute_url(self):
-        return reverse('echos:echo-detail', args=[self.id])
+        return reverse('echos:echo-detail', args=[self])
 
     class Meta:
         ordering = ['-created_at']

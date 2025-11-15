@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path, register_converter
 
-from . import views
+from . import converters, views
 
 app_name = 'waves'
+register_converter(converters.WaveConverter, 'wave')
 
 urlpatterns = [
-    path('<int:wave_id>/edit/', views.edit_wave, name='edit-wave'),
-    path('<int:wave_id>/delete/', views.delete_wave, name='delete-wave'),
+    path('<wave:wave>/edit/', views.edit_wave, name='edit-wave'),
+    path('<wave:wave>/delete/', views.delete_wave, name='delete-wave'),
 ]

@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %} {% endblock %}</title>
-</head>
-<body>
-  <main>
-    <form method="post" novalidate>
+{% extends 'base.html' %}
+
+{% block content %}
+  <form method="post" novalidate>
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="{{ submit_text }}">
-    {% block link_plus %} {% endblock %}
-    {% block cancel_button %}{% endblock %}
+    {% block custom_links %} {% endblock %}
   </form>
-
-  </main>
-</body>
-</html>
- 
+{% endblock %}

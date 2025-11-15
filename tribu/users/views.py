@@ -1,8 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.http import HttpResponseForbidden
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 
 from .forms import EditProfileForm
 from .models import Profile
@@ -15,8 +14,7 @@ def user_list(request):
 
 
 @login_required
-def user_detail(request, username: str):
-    user = get_object_or_404(User, username=username)
+def user_detail(request, user):
     echos = user.echos.all()
     show_more = echos.count() > 5
     echos = echos[:5]
@@ -28,8 +26,7 @@ def user_detail(request, username: str):
 
 
 @login_required
-def user_echos(request, username: str):
-    user = get_object_or_404(User, username=username)
+def user_echos(request, user):
     echos = user.echos.all()
     return render(
         request,
@@ -40,13 +37,11 @@ def user_echos(request, username: str):
 
 @login_required
 def my_user_detail(request):
-    return redirect('users:user-detail', username=request.user)
+    return redirect(request.user.profile)
 
 
 @login_required
-def edit_profile(request, username):
-    user = get_object_or_404(User, username=username)
-
+def edit_profile(request, user):
     if user != request.user:
         return HttpResponseForbidden()
 

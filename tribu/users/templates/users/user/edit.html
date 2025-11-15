@@ -8,7 +8,7 @@
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Añadir">
-    <a href="{% url 'users:user-detail' user.username %}">Cancelar</a>
+    <a href="{{ user.get_absolute_url }}">Cancelar</a>
 </form>
 
 {% endblock %}

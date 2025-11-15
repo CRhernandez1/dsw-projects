@@ -22,7 +22,9 @@ def user_login(request):
                 form.add_error(None, 'Incorrect username or password.')
     else:
         form = LoginForm()
-    return render(request, 'accounts/login.html', {'form': form, 'submit_text': 'Login'})
+    return render(
+        request, 'accounts/login.html', {'form': form, 'submit_text': 'Login', 'sesion_page': True}
+    )
 
 
 def user_logout(request):
@@ -44,4 +46,8 @@ def user_signup(request):
             return redirect(FALLBACK_REDIRECT)
     else:
         form = SignupForm()
-    return render(request, 'accounts/signup.html', {'form': form, 'submit_text': 'Sign up'})
+    return render(
+        request,
+        'accounts/signup.html',
+        {'form': form, 'submit_text': 'Sign up', 'sesion_page': True},
+    )
