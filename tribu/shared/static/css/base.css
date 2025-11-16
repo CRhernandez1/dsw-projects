@@ -1,0 +1,82 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  font-size: 1.6rem;
+  background-color: #242424;
+  color: #b09aff;
+  width: 80vw;
+  margin: 0 auto;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: beige;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 5rem;
+}
+
+.user-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.profile-img {
+  width: 4rem;
+  border-radius: 50%;
+}
+
+.user-box {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  p {
+    font-size: 2rem;
+    color: beige;
+  }
+}
+
+.profile-btn {
+  position: relative;
+}
+
+.user-nav {
+  display: none;
+  width: 100%;
+  position: absolute;
+  background-color: #f1eef1;
+  border: 1px solid #ccc;
+  right: 0;
+  top: 4rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+
+  a {
+    display: block;
+    text-align: center;
+  }
+
+  .no-register > a:first-of-type {
+    margin-bottom: 1rem;
+  }
+}

@@ -1,0 +1,51 @@
+.echo-main {
+  width: 80%;
+  margin: 0 auto;
+}
+
+ol {
+  margin-top: 6rem;
+}
+
+.echo {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border: 1px solid #464645;
+  border-radius: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 16rem;
+
+  .echo-content {
+    font-size: 1.8rem;
+    color: #fff;
+  }
+}
+
+.tag-info {
+  background-color: #352a3c;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+}
+
+.detail-btn {
+  color: #000;
+  background-color: #f5f5dcd6;
+  margin-right: 2rem;
+}
+
+.echo-user-info {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 2rem;
+  }
+
+  .username-tag {
+    color: #a8a6a6;
+    font-size: 1.4rem;
+  }
+}
