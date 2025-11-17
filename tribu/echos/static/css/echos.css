@@ -7,7 +7,8 @@ ol {
   margin-top: 6rem;
 }
 
-.echo {
+.echo,
+.echo-detail {
   margin-bottom: 2rem;
   padding: 2rem;
   border: 1px solid #464645;
@@ -32,8 +33,11 @@ ol {
 
 .detail-btn {
   color: #000;
-  background-color: #f5f5dcd6;
   margin-right: 2rem;
+
+  &:hover {
+    background-color: #f5f5dcd6;
+  }
 }
 
 .echo-user-info {
@@ -47,5 +51,42 @@ ol {
   .username-tag {
     color: #a8a6a6;
     font-size: 1.4rem;
+  }
+}
+
+.echo-detail-container {
+  width: 70%;
+  margin: 0 auto;
+
+  .echo-options a:first-of-type {
+    background-color: #6c12a670;
+    color: white;
+  }
+}
+
+.add-wave {
+  display: inline-block;
+  text-align: start;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-top: 5rem;
+  padding: 2rem;
+  border: 1px solid red;
+
+  svg {
+    width: 5rem;
+    height: 2rem;
+  }
+}
+
+.wave {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  p {
+    line-height: 1.7;
   }
 }

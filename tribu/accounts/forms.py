@@ -13,3 +13,9 @@ class SignupForm(forms.ModelForm):
         fields = ('username', 'password', 'first_name', 'last_name', 'email')
         widgets = {'password': forms.PasswordInput}
         help_texts = {'username': None}
+
+    def save(self, *args, **kwargs):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        user = super().save(*args, **kwargs)
+        return user

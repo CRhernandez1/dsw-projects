@@ -17,6 +17,7 @@ body {
   color: #b09aff;
   width: 80vw;
   margin: 0 auto;
+  font-family: "Poppins", sans-serif;
 }
 
 li {
@@ -74,6 +75,7 @@ a {
   a {
     display: block;
     text-align: center;
+    color: #60605e;
   }
 
   .no-register > a:first-of-type {
