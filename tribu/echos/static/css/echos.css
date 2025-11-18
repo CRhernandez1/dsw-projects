@@ -7,6 +7,10 @@ ol {
   margin-top: 6rem;
 }
 
+.add-btn {
+  margin-top: 1rem;
+}
+
 .echo,
 .echo-detail {
   margin-bottom: 2rem;
@@ -32,11 +36,12 @@ ol {
 }
 
 .detail-btn {
-  color: #000;
+  color: beige;
   margin-right: 2rem;
 
   &:hover {
     background-color: #f5f5dcd6;
+    color: #000;
   }
 }
 
@@ -70,12 +75,17 @@ ol {
   font-size: 2rem;
   font-weight: 500;
   margin-top: 5rem;
-  padding: 2rem;
-  border: 1px solid red;
+  padding-right: 1.65rem;
+  border: 1px solid beige;
+  border-radius: 1rem;
 
   svg {
     width: 5rem;
     height: 2rem;
+  }
+
+  &:hover {
+    background-color: #464645;
   }
 }
 

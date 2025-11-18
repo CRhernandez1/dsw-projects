@@ -2,10 +2,16 @@
 
 {% block title%} Users {% endblock %}
 
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/users.css' %}">
+{% endblock %}
+
 {% block content %}
-  <ul>
+  <ul class='user-container'>
     {% for profile in profiles %}
-    <li>
+    <li class='user-info'>
       <p>{{ profile }}</p>
       <a href="{{ profile.get_absolute_url }}">Profile</a>
     </li>

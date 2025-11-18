@@ -31,11 +31,12 @@ def add_echo(request):
 
 @login_required
 def echo_detail(request, echo):
-    waves = echo.waves.all()
+    waves = echo.waves.all()[:6]
     show_more = waves.count() > 5
-    waves = waves[:5]
     return render(
-        request, 'echos/echo/detail.html', {'echo': echo, 'waves': waves, 'show_more': show_more}
+        request,
+        'echos/echo/detail.html',
+        {'echo': echo, 'waves': waves[:5], 'show_more': show_more},
     )
 
 
