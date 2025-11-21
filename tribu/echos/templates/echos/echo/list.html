@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Echos {% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/echos.css' %}">
+{% endblock %}
+
+{% block content %}
+  <main class="echo-main">
+    {% if n_echos%}
+      <p>Tribu has posted {{ n_echos }} echo{{ n_echos|pluralize }} so far!</p>
+    {% endif %}
+    <a class='tag-info detail-btn add-btn' href="{% url 'echos:add-echo' %}">Add echo</a>
+    <ol>
+      {% for echo in echos %}
+      <li>
+        <article class="echo">
+          <div class="echo-user-info">
+            <img class="profile-img" src="{{ echo.user.profile.avatar.url }}" alt="Profile Image">
+            <a href="{{ echo.user.profile.get_absolute_url }}">
+              <span>{{ echo.user.first_name }}</span>
+              <span>{{ echo.user.last_name }}</span>
+              <span class="username-tag">@{{ echo.user.username }}</span>
+            </a>
+          </div>
+          <p class="echo-content">{{ echo.content|truncatewords:20 }}</p>
+          <div class="tags-echo">
+            <a class="tag-info detail-btn" href="{% url 'echos:echo-detail' echo %}">Detail Echo</a>
+            <p class="tag-info">{{ echo.created_at|timesince }}</p>
+          </div>
+        </article>
+      </li>
+        {% empty %}
+          <p>No echos yet</p>
+      {% endfor %}
+    </ol>
+  </main>
+{% endblock %}

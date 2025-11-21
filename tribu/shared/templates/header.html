@@ -1,0 +1,42 @@
+<header>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="main-header">
+    <h1><a href="{% url 'index' %}">Tribu</a></h1>
+
+    <div class="profile-btn">
+      <div class="user-box">
+        {% if user.is_authenticated %}
+        <img  
+          class="profile-img" 
+          src="{{ user.profile.avatar.url }}" 
+          alt="Profile Image"
+          >
+        {% endif %}
+        <p>{{ user }}</p>
+      </div>
+
+      <nav class="user-nav">
+        {% if not sesion_page %}
+          {% if user.is_authenticated %}
+            <a class="home-btns" href="{% url 'logout' %}">Logout</a>
+          {% else %}
+            <div class="no-register">
+              <a class="home-btns" href="{% url 'signup' %}">Sign up</a>
+              <a class="home-btns" href="{% url 'login' %}">Login</a>
+            </div>
+          {% endif %}
+        {% endif %}
+        {% block custom_links %}{% endblock %}
+      </nav>
+    </div>
+  </div>
+</header>

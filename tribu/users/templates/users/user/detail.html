@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%} Users {% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/users.css' %}">
+{% endblock %}
+
+{% block content %}
+  <article >
+    <ul class='profile-info'>
+      <img class='image-profile' src="{{ user.profile.avatar.url }}" alt="Profile Image">
+      <div class='text-user-info'>
+      <li>@{{ user }}</li>
+      <li>{{ user.first_name }} {{ user.last_name }}</li>
+      <li>{{ user.email }}</li>
+      <li>{{ user.profile.bio }}</li>
+      <div>
+    </ul>
+    
+    <ol class='waves-echo'>
+      {% for echo in echos %}
+      <li>
+        <article>
+          <p>{{ echo.content|truncatewords:20 }}</p>
+          <p>{{ echo.user }} <a href="{{ echo.user.get_absolute_url }}">Profile</a></p>
+          <a href="{% url 'echos:echo-detail' echo %}">Detail Echo</a>
+          <p>{{ echo.created_at|timesince }}</p>
+        </article>
+      </li>
+        {% empty %}
+          <p>No echos yet</p>
+      {% endfor %}
+    </ol>
+    {% if show_more %}
+      <a class='add-wave' href="{% url 'users:user-echos' user %}">View All Echos</a>
+    {% endif %}
+   
+    {% if user == request.user %}
+      <a href="{% url 'users:edit-profile' user %}">Edit profile</a>
+    {% endif %}
+  </article>
+{% endblock %}

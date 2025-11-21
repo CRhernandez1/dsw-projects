@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ task }}</h2>
+  <p>{{ task.completed|yesno:'Completada, Pendiente' }}</p>
+  <p>{{ task.description }}</p>
+  <a href="{% url 'tasks:task-list' %}">Volver</a>
+{% endblock %}

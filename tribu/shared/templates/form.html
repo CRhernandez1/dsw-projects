@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class='container'>
+  <form class='auth-form' method="post" novalidate>
+    {% csrf_token %}
+    {{ form }}
+    <input class='auth-submit' type="submit" value="{{ submit_text }}">
+    {% block custom_links %} {% endblock %}
+  </form>
+</div>
+{% endblock %}

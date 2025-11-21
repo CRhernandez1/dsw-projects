@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Detail Echo {% endblock%}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/echos.css' %}">
+{% endblock %}
+
+{% block content %} 
+  <article class='echo-detail-container'>
+    <div class='echo-detail'>
+      <p>{{ echo.user }} <a href="{% url 'users:user-detail' echo.user %}">Profile</a></p>
+      <p class='echo-content'>{{ echo.content }}</p> 
+      <p>{{ echo.created_at|timesince }}</p>
+      {% if echo.user == request.user %}
+      <div class='echo-options'>
+        <a class='detail-btn tag-info' href="{% url 'echos:delete-echo' echo %}">Delete echo</a>
+        <a class='detail-btn tag-info' href="{% url 'echos:edit-echo' echo %}">Edit echo</a>
+      </div>
+      {% endif %}
+      
+    </div>
+
+    <a class="add-wave" href="{% url 'echos:add-wave' echo %}"><svg viewBox="0 0 17 16"><path fill="currentColor" fill-rule="evenodd" d="M16.479 2.536L14.474.546c-.539-.537-1.383-.565-1.884-.064L3.47 9.616s-2.312 5.32-2.469 5.75c-.125.34.306.771.604.625c.48-.237 5.74-2.52 5.74-2.52l9.142-9.172c.502-.502.531-1.226-.008-1.763M2.312 13.906l1.721-3.627l-.018.706l.998-.014l9.524-9.442l1.259 1.236l-9.184 8.965l-.227.752l.486.486l-3.811 1.656z"/></svg>Add wave 
+    </a>
+    <ol>
+      {% for wave in waves %}
+      <li>
+        <article class="wave"> 
+          <p>{{ wave.user }} <a href="{% url 'users:user-detail' wave.user %}">Profile</a></p>
+          <p>{{ wave.content }}</p>
+          <p>{{ wave.created_at|timesince }}</p>
+          {% if wave.user == request.user %}
+            <a href="{% url 'waves:delete-wave' wave %}">Delete wave</a>
+            <a href="{% url 'waves:edit-wave' wave %}">Edit wave</a>     
+          {% endif %}
+        </article>
+      </li>
+        {% empty %}
+          <p class="tag-info">No waves yet</p>
+      {% endfor %}
+    </ol>
+    {% if show_more %}
+      <a href="{% url 'echos:echo-waves' echo %}">View all waves</a>
+    {% endif %}
+  </article>
+{% endblock %}
