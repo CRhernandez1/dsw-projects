@@ -76,5 +76,5 @@ Cada carpeta de proyecto contiene una receta `just` para facilitar el despliegue
 Estos proyectos han sido realizados de forma colaborativa como solución técnica a los retos de la asignatura de **DSW**, aplicando rigor analítico y lógica estructurada en la resolución de incidencias.
 
 - Daniele Dettori: [@Pepepe14](https://github.com/Pepepe14)
-- Samuel Cruz Sánchez: [@samuelcrz30](https://github.com/samuelcrz30)
+- Samuel Domingo Cruz Sánchez: [@samuelcrz30](https://github.com/samuelcrz30)
 - Cristian Reyes Hernández: [@CRhernandez1](https://github.com/CRhernandez1)
