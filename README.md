@@ -12,8 +12,8 @@ Este repositorio centraliza las soluciones desarrolladas en grupo para la asigna
 
 El repositorio se divide en dos proyectos independientes, cada uno con su propia lógica de negocio y configuración:
 
-1.  **[SuperTODO](./super-todo/):** Sistema de gestión de tareas con lógica de estados.
-2.  **[Tribu](./tribu/):** Red social de microblogging con interacciones.
+1.  **SuperTODO:** Sistema de gestión de tareas con lógica de estados.
+2.  **Tribu:** Red social de microblogging con interacciones.
 
 ---
 
